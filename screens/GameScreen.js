@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import React, { useState, useRef, useEffect } from "react";
+import { View, Text, StyleSheet, Button, Alert } from "react-native";
 import Card from "../components/Card";
 import Colors from "../constants/colors";
 
@@ -16,6 +16,42 @@ const GameScreen = props => {
   const [currentGuess, setCurrentGuess] = useState(
     generateRandomBetween(1, 100, props.userChoice)
   );
+  const currentLow = useRef(1);
+  const currentHigh = useRef(100);
+
+  const [rounds, setRounds] = useState(0);
+
+  const { userChoice, onGameOver } = props;
+  useEffect(() => {
+    if (currentGuess === props.userChoice) {
+      props.onGameOver(rounds);
+    }
+  }, [currentGuess, userChoice, onGameOver]);
+
+  const nextGuessHandler = direction => {
+    if (
+      (direction === "lower" && currentGuess < props.userChoice) ||
+      (direction === "greater" && currentGuess > props.userChoice)
+    ) {
+      console.log("code aya yha");
+      Alert.alert("Don't Lie", "You knwo this is Wrong!", [
+        { text: "Sorry!", style: "cancel" }
+      ]);
+      return;
+    }
+    if (direction === "lower") {
+      currentHigh.current = currentGuess;
+    } else {
+      currentLow.current = currentGuess;
+    }
+    const nextGuess = generateRandomBetween(
+      currentLow.current,
+      currentHigh.current,
+      currentGuess
+    );
+    setCurrentGuess(nextGuess);
+    setRounds(curRounds => curRounds + 1);
+  };
 
   return (
     <View style={styles.screen}>
@@ -23,8 +59,20 @@ const GameScreen = props => {
       <Card style={styles.confirmText}>
         <Text style={styles.numberText}>{currentGuess}</Text>
         <View style={styles.buttonContainer}>
-          <Button title="LOWER" onPress={() => {}} color={Colors.accent} />
-          <Button title="GREATER" onPress={() => {}} color={Colors.primary} />
+          <Button
+            title="LOWERR"
+            onPress={() => {
+              nextGuessHandler("lower");
+            }}
+            color={Colors.accent}
+          />
+          <Button
+            title="GREATER"
+            onPress={() => {
+              nextGuessHandler("greater");
+            }}
+            color={Colors.primary}
+          />
         </View>
       </Card>
     </View>
@@ -50,7 +98,7 @@ const styles = StyleSheet.create({
     width: 300,
     maxWidth: "80%",
     justifyContent: "space-between",
-    paddingHorizontal: 15
+    paddingHorizontal: 20
   }
 });
 
