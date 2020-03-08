@@ -1,11 +1,15 @@
 import React from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
+import { Text, View, StyleSheet, Button, Image } from "react-native";
 import Color from "../constants/colors";
 
 const GameOverScreen = props => {
   return (
     <View style={styles.screen}>
       <Text style={styles.textStyle}>Game Over!!</Text>
+      <Image
+        source={require("../assets/success.png")}
+        style={styles.imageStyle}
+      />
       <Text style={styles.textStyle}>No of Rounds : {props.roundNumber}</Text>
       <Text style={styles.textStyle}>Your Number : {props.userChoice}</Text>
       <View style={styles.buttonStyle}>
@@ -31,6 +35,10 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: 22,
     paddingVertical: 8
+  },
+  imageStyle: {
+    width: "80%",
+    height: 250
   }
 });
 
