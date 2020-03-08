@@ -3,7 +3,6 @@ import {
   Text,
   View,
   StyleSheet,
-  TextInput,
   Button,
   TouchableWithoutFeedback,
   Keyboard,
@@ -38,12 +37,24 @@ const StartGameScreen = props => {
     setConfirmed(true);
     setSelectedNumber(parseInt(enteredValue));
     setEnteredValue("");
+    Keyboard.dismiss();
   };
 
   let confirmText;
 
   if (confirmed) {
-    confirmText = <Text>Confirmed Number is : {selectedNumber}</Text>;
+    confirmText = (
+      <Card style={styles.confirmText}>
+        <Text style={styles.numberText}>{selectedNumber}</Text>
+        <Button
+          title="Start Game"
+          color={Colors.primary}
+          onPress={() => {
+            props.onStartGame(selectedNumber);
+          }}
+        />
+      </Card>
+    );
   }
 
   return (
@@ -114,6 +125,14 @@ const styles = StyleSheet.create({
   input: {
     width: 50,
     textAlign: "center"
+  },
+  confirmText: {
+    marginVertical: 30,
+    alignItems: "center"
+  },
+  numberText: {
+    fontSize: 30,
+    padding: 10
   }
 });
 
