@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "try_app",
+    "name": "Guess Number",
     "slug": "try_app",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/cigrette.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -21,7 +21,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.shivam.shivamChat",
+      "package": "com.shivam.shivamNumberGame",
       "versionCode": 1
     }
   }
